@@ -7,13 +7,13 @@ int accessible_roll(char matrix[150][150], char matrix2[150][150], int y, int x,
     int count = 0;
     for (int dy = -1; dy <= 1; dy++) {
         for (int dx = -1; dx <= 1; dx++) {
-	    int new_x = dx + x;
-	    int new_y = dy + y;
+            int new_x = dx + x;
+            int new_y = dy + y;
             if ((dy == 0) && (dx == 0)) { continue; }
             if ((new_y < 0) || (new_y >= len_y)) { continue; }
             if ((new_x < 0) || (new_x >= len_x)) { continue; }
-	    if (matrix[new_y][new_x] == '@') { count++; }
-	}
+            if (matrix[new_y][new_x] == '@') { count++; }
+        }
     }
     if (count < 4) { matrix2[y][x] = '.'; return 1;}
     matrix2[y][x] = '@';
@@ -36,9 +36,9 @@ void main() {
     int total = 0;
     for (int i=0; fgets(buffer,150,stdin); i++) {
         zeroize_newline(buffer);
-	memcpy(matrix[i],buffer,150);
-	matrix[i+1][0] = 0;
-	len_y++;
+        memcpy(matrix[i],buffer,150);
+        matrix[i+1][0] = 0;
+        len_y++;
     }
     for (int i=0; matrix[0][i] != 0; i++) { len_x++; }
 
@@ -50,14 +50,14 @@ void main() {
         partial = 0;
         for (int y = 0; y < len_y; y++) {
             for (int x = 0; x < len_x; x++) {
-    	        int result = accessible_roll(tmp1,tmp2,y,x,len_y,len_x);
+                int result = accessible_roll(tmp1,tmp2,y,x,len_y,len_x);
                 partial += result;
-    	    }
+            }
         }
-	tmp3 = tmp1;
-	tmp1 = tmp2;
-	tmp2 = tmp3;
-	total += partial;
+        tmp3 = tmp1;
+        tmp1 = tmp2;
+        tmp2 = tmp3;
+        total += partial;
     } while (partial > 0);
     printf("%d\n",total);
 }
