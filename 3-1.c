@@ -17,16 +17,16 @@ void main() {
     char buffer[150];
     long unsigned int total = 0;
     while (fgets(buffer,150,stdin)) {
-	int len = 0;
-	for (int i=0; buffer[i] != 0; i++) {
+        int len = 0;
+        for (int i=0; buffer[i] != 0; i++) {
             if ((buffer[i] >= '0') && (buffer[i] <= '9')) { len++; continue; }
-	    buffer[i] = 0;
-	    break;
-	}
-	char digits[DIGIT_COUNT];
-	for (int i=0; i < DIGIT_COUNT; i++) { digits[i] = 0; }
+            buffer[i] = 0;
+            break;
+        }
+        char digits[DIGIT_COUNT];
+        for (int i=0; i < DIGIT_COUNT; i++) { digits[i] = 0; }
         int delim = 0;
-	for (int i=0; i < DIGIT_COUNT; i++) {
+        for (int i=0; i < DIGIT_COUNT; i++) {
             for (int j=delim; j < (len-(DIGIT_COUNT-(i+1))); j++) {
                 char digit = buffer[j] - '0';
                 if (digit > digits[i]) {
@@ -34,12 +34,12 @@ void main() {
                     delim = j+1;
                 }
             }
-	}
-	long unsigned int partial = 0;
+        }
+        long unsigned int partial = 0;
         long unsigned int multiplier = 1;
-	for (int i=0; i < DIGIT_COUNT; i++) {
+        for (int i=0; i < DIGIT_COUNT; i++) {
             partial += (long unsigned int) digits[i] * powten(DIGIT_COUNT-(i+1));
-	}
+        }
         total += partial;
     }
     printf("%lu\n",total);
