@@ -16,11 +16,26 @@ int is_operator(char a) {
     return 0;
 }
 
+unsigned long int calculate_total(unsigned long int (*data)[1000], char *operator, int line) {
+    unsigned long int total = 0;
+    for (int i=0; operator[i] != -1; i++) {
+            unsigned long int result;
+            if (operator[i] == '*') {
+                result = 1;
+                for (int j = line -1; j >=0; j--) { result *= data[j][i]; }
+            } else {
+                result = 0;
+                for (int j = line -1; j >=0; j--) { result += data[j][i]; }
+            }
+            total += result;
+    }
+    return total;
+}
+
 int main() {
     char buffer[10000];
     unsigned long int data[10][1000];
     char operator[1000];
-    unsigned long int total = 0;
     for (int line = 0; fgets(buffer,10000,stdin) ; line++) {
         char *tmp;
         tmp = buffer;
@@ -52,18 +67,8 @@ int main() {
                 }
                 operator[i] = -1;
             }
-            for (int i=0; operator[i] != -1; i++) {
-                    unsigned long int result;
-                    if (operator[i] == '*') {
-                        result = 1;
-                        for (int j = line -1; j >=0; j--) { result *= data[j][i]; }
-                    } else {
-                        result = 0;
-                        for (int j = line -1; j >=0; j--) { result += data[j][i]; }
-                    }
-                    total += result;
-            }
+            printf("%lu\n", calculate_total(data,operator,line));
+            return 0;
         }
     }
-    printf("%lu\n",total);
 }
